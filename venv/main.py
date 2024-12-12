@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from typing import Union, Optional, Annotated
 from contextlib import asynccontextmanager
 from database import create_tables, delete_tables
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await delete_tables()
@@ -14,12 +15,6 @@ async def lifespan(app: FastAPI):
     
 app = FastAPI(lifespan=lifespan)
 
-class STaskAdd(BaseModel):
-    name: str
-    description: Optional[str] = None
-    
-class STask(STaskAdd):
-    id: int
     
 class Task(BaseModel):
     name: str
